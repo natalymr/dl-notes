@@ -1,8 +1,9 @@
-# dl-notes
+## Deep Learning
+
 This repo contains my notes from my university Deep Learning course.
 > **You should open the links that are located below so that the latex-formulas are correctly visible.**
 
-A list of questions for the exam and at the same time course content:
+### A list of questions for the exam and at the same time course content:
 
 1. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_1.html)
   - Loss functions: Smooth L1, Bounding Box Regression, Triplet Loss.

@@ -1,5 +1,6 @@
 # dl-notes
-This repo contains my notes from my university Deep Learning course
+This repo contains my notes from my university Deep Learning course.
+> **You should open the links that are located below so that the latex-formulas are correctly visible.**
 
 A list of questions for the exam and at the same time course content:
 
@@ -15,7 +16,7 @@ A list of questions for the exam and at the same time course content:
 4. Question
   - Convolutions. Causal convolutions. Dilated convolutions. Max pooling. Average pooling. Padding.
   - Recurrent Neural Networks. LSTM. GRU.
-5. Question
+5. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_5.html)
   - Skip connections. ResNet. Highway connection.
   - Generative Adversarial Networks.
 6. Question

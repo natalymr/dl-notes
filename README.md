@@ -3,7 +3,7 @@ This repo contains my notes from my university Deep Learning course
 
 A list of questions for the exam and at the same time course content:
 
-1. [Question](https://hackmd.io/BZN_v1JVQgajTmLgNvV6DQ?both)
+1. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_1.html)
   - Loss functions: Smooth L1, Bounding Box Regression, Triplet Loss.
   - Variational Autoencoders.
 2. Question

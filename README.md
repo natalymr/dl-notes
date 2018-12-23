@@ -20,7 +20,7 @@ This repo contains my notes from my university Deep Learning course.
 5. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_5.html)
   - Skip connections. ResNet. Highway connection.
   - Generative Adversarial Networks.
-6. Question
+6. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_6.html)
   - Optimizers: Adagrad, Adadelta, RMSProp.
   - Speech recognition. Connectionist Temporal Classification. Deep Speech. CNN Speech Recognition.
 7. Question

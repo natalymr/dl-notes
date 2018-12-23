@@ -29,7 +29,7 @@ This repo contains my notes from my university Deep Learning course.
 8. Question
   - Regularization: L2, Early Stopping, Dropout, Dropconnect, Batch Normalization.
   - Adversarial attacks: White box, Black box, Targeted, Untargeted.
-9. Question
+9. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_9.html)
   - Optimizers: Stochastic Gradient Descent, Momentum, Nesterov Momentum.
   - Object Detection. Faster R-CNN, Mask R-CNN.
 10. Question

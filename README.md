@@ -23,7 +23,7 @@ This repo contains my notes from my university Deep Learning course.
 6. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_6.html)
   - Optimizers: Adagrad, Adadelta, RMSProp.
   - Speech recognition. Connectionist Temporal Classification. Deep Speech. CNN Speech Recognition.
-7. Question
+7. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_7.html)
   - Word embeddings: Co-occurrence Matrix, Word2Vec, CBOW, Skip-Gram, GloVE, FastText.
   - Deep Reinforcement Learning: Deep Q-Network, Deep Deterministic Policy Gradient.
 8. Question

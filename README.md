@@ -32,6 +32,6 @@ This repo contains my notes from my university Deep Learning course.
 9. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_9.html)
   - Optimizers: Stochastic Gradient Descent, Momentum, Nesterov Momentum.
   - Object Detection. Faster R-CNN, Mask R-CNN.
-10. Question
+10. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_10.html)
   - Optimizers: Adam, NAdam.
   - Object Detection. IoU, mAP. R-CNN. Fast R-CNN.

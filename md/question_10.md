@@ -165,6 +165,10 @@ $Nadam -\ Nesterov\ -\ accelerated\ ADAptive\ Moment\ estimation$
 
 _TRUE - if $IoU > 0.5$_
 
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_10/iou1.png?raw=true">
+</p>
+
 ### Метрики: mPA
 
 [Источник того, что ниже - стэковерфлов.](https://stackoverflow.com/questions/36274638/map-metric-in-object-detection-and-computer-vision)

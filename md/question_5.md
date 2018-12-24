@@ -1,5 +1,78 @@
 # Билет №5
 ## Вопрос 1: Skip connections. ResNet. Highway connection.
+
+### ResNet
+
+[Источник того, что ниже - хабр.](https://habr.com/post/303196/)
+
+Известно, что если тупо увеличивать количество уровней в каком-нибудь $VGG$ — он начнет тренироваться все хуже и хуже, и в смысле точности на тренировочном сете, и на validation.
+
+Что в некотором смысле странно — более глубокая сеть обладает строго большим representational power.
+
+И, вообще говоря, можно тривиально получить более глубокую модель, которая не хуже менее глубокой, тупо добавив несколько identity layers, то есть уровней, которые просто пропускают сигнал дальше без изменений. Однако, дотренировать обычным способом до такой точности глубокие модели не получается.
+
+Вот это наблюдение, что всегда можно сделать не хуже identity, и есть основная мысль ResNets.
+Давайте сформулируем задачу так, чтобы более глубокие уровни предсказывали разницу между тем, что выдают предыдущие лееры и таргетом, то есть всегда могли увести веса в $0$ и просто пропустить сигнал.
+Отсюда название — Deep Residual Learning, то есть обучаемся предсказывать отклонения от прошлых лееров.
+
+Более конкретно это выглядит следующим образом.
+Основной building block сети — вот такая конструкция:
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_5/building_block.png?raw=true">
+</p>
+
+Два слоя с весами (могут быть convolution, могут быть нет), и shortcut connection, который тупо identity. Результат после двух лееров добавляется к этому identity. Почему каждые два уровня, а не каждый первый? Объяснений нет, видимо на практике заработало вот так.
+Поэтому если в весах некого уровня будет везде $0$, он просто пропустит дальше чистый сигнал.
+
+Эта сеть показывает результаты лучше, чем $VGG$!
+
+Чтобы получилось больше лееров, надо делать их полегче — есть идея вместо двух convolutions делать например один и меньшей толщины:
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_5/building_block1.png?raw=true">
+</p>
+
+Было как слева, сделаем как справа. Количество и вычислений, и параметров 
+уменьшается радикально.
+
+И вот тут _пацанам_ начинает переть и они начинают тренировать версию на 101 и 152(!) леера. Причем даже у таких сверх-глубоких сетей количество параметров меньше, чем у толстых версий VGG.
+
+_ResNet vs. Plain Network vs. VGG-19_
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_5/resnet0.png?raw=true">
+</p>
+
+Финальный результат на ансамбле, как было упомянуто раньше — $3.57\%$ top5 на Imagenet.
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_5/resnet.png?raw=true">
+</p>
+
+### Highway connection
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_5/highway_connection.png?raw=true">
+</p>
+
+[Источник того, что ниже.](http://yanran.li/peppypapers/2016/01/10/highway-networks-and-deep-residual-networks.html)
+
+$ResNet$ пример $Highway\ Networks$.
+
+The ResNet is also motivated by the difficult information flow in deep networks.
+> Deeper is not better? Such phenomeon is called “degradation problem”
+
+The motivation is to address the “gradient vanishing” problem, especially when exacerbated the information flow in deeper layers.  In other words, the information is blocked in “traffic problem”. And the intuition is to design mechanism, set up “special path” that rejuvenates the “traffic” in the deep networks, just like “Highway” in our real life. So, that’s where the name comes. The Highway networks.
+
+> To overcome this, we take inspiration from Long Short Term Memory (LSTM) recurrent networks. We propose to modify the architecture of very deep feedforward networks such that information flow across layers becomes much easier. This is accomplished through an LSTM-inspired adaptive gating mechanism that allows for paths along which information can flow across many layers without attenuation. We call such paths information highways. They yield highway networks, as opposed to traditional ‘plain’ networks.
+> 
+> _attenuation - затухание_
+
+
+
+
+
 ## Вопрос 2: Generative Adversarial Networks (GAN)
 [Источник того, что ниже.](https://habr.com/post/332000/)
 При всех преимуществах вариационных автоэнкодеров $VAE$, которыми мы занимались в предыдущих постах, они обладают одним существенным недостатком: из-за плохого способа сравнения оригинальных и восстановленных объектов, сгенерированные ими объекты хоть и похожи на объекты из обучающей выборки, но легко от них отличимы (например, размыты).

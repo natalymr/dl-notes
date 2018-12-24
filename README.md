@@ -14,7 +14,7 @@ This repo contains my notes from my university Deep Learning course.
 3. Question
   - Attention. Gated Attention.
   - Image Segmentation Networks: FCN, SegNet, UNet.
-4. Question
+4. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_4.html)
   - Convolutions. Causal convolutions. Dilated convolutions. Max pooling. Average pooling. Padding.
   - Recurrent Neural Networks. LSTM. GRU.
 5. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_5.html)

@@ -59,3 +59,63 @@ $f({\vec {x}})=\max_i x_{i}$
 
 
 ## Вопрос 2: Image Classification Network: AlexNet, VGGnet, GoogleNet.
+
+### AlexNet
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/alexNet1.png?raw=true">
+</p>
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/alexNet2.png?raw=true">
+</p>
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/alexNet3.png?raw=true">
+</p>
+
+### VGGNet
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/vggnet0.png?raw=true">
+</p>
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/vggnet1.png?raw=true">
+</p>
+
+This network is characterized by its simplicity, using only $3×3$ convolutional layers stacked on top of each other in increasing depth. Reducing volume size is handled by max pooling. Two fully-connected layers, each with $4,096$ nodes are then followed by a softmax classifier (above).
+
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/vggnet2.png?raw=true">
+</p>
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/vggnet4.png?raw=true">
+</p>
+
+Simonyan and Zisserman found training VGG16 and VGG19 challenging (specifically regarding convergence on the deeper networks), so in order to make training easier, they first trained smaller versions of VGG with less weight layers (columns A and C) first.
+
+The smaller networks converged and were then used as initializations for the larger, deeper networks — this process is called pre-training.
+
+While making logical sense, pre-training is a very time consuming, tedious task, requiring an entire network to be trained before it can serve as an initialization for a deeper network.
+
+Unfortunately, there are two major drawbacks with VGGNet:
+
+1. It is _painfully_ slow to train.
+2. The network architecture weights themselves are quite large (in terms of disk/bandwidth).
+
+Due to its depth and number of fully-connected nodes, VGG is over 533MB for VGG16 and 574MB for VGG19. This makes deploying VGG a tiresome task.
+
+We still use VGG in many deep learning image classification problems; however, smaller network architectures are often more desirable (such as SqueezeNet, GoogLeNet, etc.).
+
+### GoogleNet
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/googleNet.png?raw=true">
+</p>
+
+### Results
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_2/results.png?raw=true">
+</p>
+
+**AlexNet**, results -- $15.3\%$ (2012)

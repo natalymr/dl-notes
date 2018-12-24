@@ -11,7 +11,7 @@ This repo contains my notes from my university Deep Learning course.
 2. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/html/question_2.html)
   - Activation functions: ReLU, LeakyReLU, PReLU, MaxOut.
   - Image Classification Networks: AlexNet, VGGnet, GoogLeNet.
-3. Question
+3. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/html/question_3.html)
   - Attention. Gated Attention.
   - Image Segmentation Networks: FCN, SegNet, UNet.
 4. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/html/question_4.html)

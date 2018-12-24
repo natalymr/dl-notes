@@ -8,7 +8,7 @@ This repo contains my notes from my university Deep Learning course.
 1. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_1.html)
   - Loss functions: Smooth L1, Bounding Box Regression, Triplet Loss.
   - Variational Autoencoders.
-2. Question
+2. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_2.html)
   - Activation functions: ReLU, LeakyReLU, PReLU, MaxOut.
   - Image Classification Networks: AlexNet, VGGnet, GoogLeNet.
 3. Question

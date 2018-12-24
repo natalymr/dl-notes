@@ -26,7 +26,7 @@ This repo contains my notes from my university Deep Learning course.
 7. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_7.html)
   - Word embeddings: Co-occurrence Matrix, Word2Vec, CBOW, Skip-Gram, GloVE, FastText.
   - Deep Reinforcement Learning: Deep Q-Network, Deep Deterministic Policy Gradient.
-8. Question
+8. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_8.html)
   - Regularization: L2, Early Stopping, Dropout, Dropconnect, Batch Normalization.
   - Adversarial attacks: White box, Black box, Targeted, Untargeted.
 9. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/question_9.html)

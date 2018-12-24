@@ -1,26 +1,103 @@
 # Билет №1
-## Вопрос 1: Loss functions: smooth L1, Bounding Box Regression, Triplet Loss
+## Вопрос 1: Loss functions: Smooth L1, Bounding Box Regression, Triplet Loss.
+### Loss functions
+**Функция потерь** — функция, которая в теории статистических решений характеризует потери при неправильном принятии решений на основе наблюдаемых данных. Если решается задача оценки параметра сигнала на фоне помех, то функция потерь является мерой расхождения между истинным значением оцениваемого параметра и оценкой параметра.
 
-## Вопрос 2: Variational Autoencoders
+ An optimization problem seeks to minimize a loss function.
+ 
+ > **Selecting a loss function**
+ > Two very commonly used loss functions are the squared loss, $L(a) = a^2$, and the absolute loss, $L(a)=|a|$.
+ > 
+ > However the absolute loss has the disadvantage that it is not differentiable at $a = 0$.
+ > The squared loss has the disadvantage that it has the tendency to be dominated by outliers—when summing over a set of $a$'s (as in $\sum_{i=1}^n L(a_i)$  ), the final sum tends to be the result of a few particularly large a-values, rather than an expression of the average a-value.
+
+### Smooth L1 Loss
+[Источник того, что ниже - лекции.](https://docs.google.com/document/d/1nRC4KPQAxBrNBLu8Jr7Ii_xa5ztsmN6ZupraCeYUIVQ/edit#heading=h.bs11h29u1vot)
+Еще одно нововведение, которое было сделано, -- смена функции потерь для bounding box regression. Замечаем, что это очень похоже на $huber\ loss$. Мы отказываемся от $L2$ потому, что она довольно быстро начинает давать слишком большие значения. 
+
+[Источник того, что ниже.](https://stats.stackexchange.com/questions/351874/how-to-interpret-smooth-l1-loss)
+Smooth $L1$-loss can be interpreted as a combination of $L1$-loss and $L2$-loss. It behaves as $L1$-loss when the absolute value of the argument is high, and it behaves like $L2$-loss when the absolute value of the argument is close to zero. The equation is:
+
+$$L_{1;smooth}(x) =\begin{cases}
+               \frac{1}{\alpha}\cdot x^2, & if\ |x| \le \alpha   \\
+               |x| - \frac{1}{2}, &otherwise \\
+            \end{cases},$$
+
+where $\alpha$ is a hyper-parameter here and is usually taken as $1$. $1/\alpha$ appears near $x^2$ term to make it continuous.
+
+Smooth $L1$-loss combines the advantages of $L1$-loss (steady gradients for large values of $x$) and $L2$-loss (less oscillations during updates when $x$ is small).
+
+Another form of smooth $L1$-loss is $Huber\ loss$. They achieve the same thing.
+
+$$L_{1;smooth}^{Hubert}(a) =\begin{cases}
+               \frac{1}{2}\cdot a^2, & if\ |a| \le \delta   \\
+               \delta(|a| - \frac{1}{2}\delta), &otherwise \\
+            \end{cases}.$$
+
+### Bounding Box
+[Источник того, что ниже - лекции.](https://docs.google.com/document/d/1nRC4KPQAxBrNBLu8Jr7Ii_xa5ztsmN6ZupraCeYUIVQ/edit#heading=h.8q9hai45qe0n)
+**Bounding box** -- пытаемся найти прямоугольник, в котором находится объект. Если есть output-координаты bounding box, то можем посчитать L2-расстояние с правильным ответом в качестве loss. Тогда у нас ошибка становится суммарной, а сама сеть разделяется на два fully-connected слоя: один считает вероятность класса, а другой -- output-координаты.
+Bounding box regression -- это регрессия, посчитанная как L2 расстояние между bounding boxes.
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_1/bb_regression.png?raw=true">
+</p>
+
+> [Источник того, что ниже - хабр.](https://habr.com/post/421299/)
+> **Bounding Box Regression**
+> В ходе процедуры error analysis авторы так же разработали метод, позволяющий уменьшить ошибку выделения охватывающей рамки объекта — bounding-box regression. После классификации содержимого региона-кандидата, при помощи линейной регрессии на основе признаков из CNN определялись четыре параметра — $(dx, dy, dw, dh)$. Они описывали, насколько надо сдвинуть центр рамки региона по х и у, а также на сколько изменить её ширину и высоту, чтобы точнее охватывать распознанный объект.
+
+### Triplet Loss
+[Источник того, что ниже - лекции.](https://docs.google.com/document/d/1plbtzXjMNKeeJaVkzvG0Kmxinz_zUXYeLs3LSuSTQos/edit#heading=h.itwq84ao035w)
+В Google захотели решить более интересную задачу, а именно сделать face embedding, то есть чтобы вне зависимости от освещения, головных уборов и других аксессуаров (например, очков) получался примерно один и тот же вектор, характеризующий лицо.
+
+[Источник того, что ниже.](https://omoindrot.github.io/triplet-loss)
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_1/triplet_loss.png?raw=true">
+</p>
+
+The goal of the triplet loss is to make sure that:
+
+* Two examples with the _same label_ have their embeddings _close together_ in the embedding space
+* Two examples with _different labels_ have their embeddings _far away_.
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_1/triplet_loss1.png?raw=true">
+</p>
+
+Based on the definition of the loss, there are three categories of triplets:
+
+* **easy triplets**: triplets which have a loss of $0$, because $$d(x^a, x^p) + \alpha < d(x^a, x^n)$$
+* **hard triplets**: triplets where the negative is closer to the anchor than the positive, i.e. $$d(x^a, x^n) < d(x^a, x^p)$$
+* **semi-hard triplets**: triplets where the negative is not closer to the anchor than the positive, but which still have positive loss: $$d(x^a, x^p) < d(x^a, x^n) < d(x^a, x^p) + \alpha$$
+
+Each of these definitions depend on where the negative is, relatively to the anchor and positive. We can therefore extend these three categories to the negatives: hard negatives, semi-hard negatives or easy negatives.
+
+The figure below shows the three corresponding regions of the embedding space for the negative.
+
+<p align="center">
+  <img src = "https://github.com/natalymr/dl-notes/blob/master/pictures/question_1/triplet_loss2.png?raw=true">
+</p>
+
+Choosing what kind of triplets we want to train on will greatly impact our metrics. In the original Facenet paper, they pick a random semi-hard negative for every pair of anchor and positive, and train on these triplets.
+
+## Вопрос 2: Variational Autoencoders.
 
 ### Autoencoders
 [Истоник того, что ниже - википедия](https://ru.wikipedia.org/wiki/%D0%90%D0%B2%D1%82%D0%BE%D0%BA%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D1%89%D0%B8%D0%BA)
-
 Autoencoder -- специальная архитектура искусственных нейронных сетей, позволяющая применять обучение без учителя при использовании метода обратного распространения ошибки. Простейшая архитектура автокодировщика — сеть прямого распространения, без обратных связей, наиболее схожая с перцептроном и содержащая входной слой, промежуточный слой и выходной слой. В отличие от перцептрона, выходной слой автокодировщика должен содержать столько же нейронов, сколько и входной слой.
 
 Основной принцип работы и обучения сети автокодировщика — получить на выходном слое отклик, наиболее близкий к входному. Чтобы решение не оказалось тривиальным, на промежуточный слой автокодировщика накладывают ограничения: промежуточный слой должен быть или меньшей размерности, чем входной и выходной слои, или искусственно ограничивается количество одновременно активных нейронов промежуточного слоя — разрежённая активация. Эти ограничения заставляют нейросеть искать обобщения и корреляцию в поступающих на вход данных, выполнять их сжатие. Таким образом, нейросеть автоматически обучается выделять из входных данных общие признаки, которые кодируются в значениях весов сети. Так, при обучении сети на наборе различных входных изображений, нейросеть может самостоятельно обучиться распознавать линии и полосы под различными углами.
 
 
-![изображение с вики](./pictures/Автоэнкодер.png)
+![изображение с вики](https://github.com/natalymr/dl-notes/blob/master/pictures/%D0%90%D0%B2%D1%82%D0%BE%D1%8D%D0%BD%D0%BA%D0%BE%D0%B4%D0%B5%D1%80.png?raw=true)
 
 [Лекции](https://docs.google.com/document/d/1KN00kAWVQ55GzQWUTmA5aKEsz7VYYEEqAEohquVKz1I/edit)
-
 Так выглядит обычный autoencoder. У нас есть вход (картинка, вектор, текст и т.д.), есть выход. Задача -- научить сеть восстанавливать вход, то есть получить на выходе вектор **X'** максимально близкий к **X**, при этом хочется в середине получать максимально маленький вектор **Z**, кодирующий **X**. 
 **Z** можно рассматривать как **embedding**.
 
 [Источник того, что ниже](https://habr.com/post/331382/)
-
-Автоэнкодеры состоят из двух частей: энкодера $g$ и декодера $f$. Энкодер переводит входной сигнал в его представление: $h = g(x)$, а декодер восстанавливает сигнал по его коду: <img src="https://latex.codecogs.com/gif.latex?x=f(h)" />.
+Автоэнкодеры состоят из двух частей: энкодера g и декодера f. Энкодер переводит входной сигнал в его представление: $h = g(x)$, а декодер восстанавливает сигнал по его коду: $x=f(h)$.
 
 Автоэнкодер, изменяя $f$ и $g$, стремится выучить тождественную функцию $x = f(g(x))$, минимизируя какой-то функционал ошибки.
 
@@ -34,9 +111,9 @@ $$L(x, f(g(x)))$$
 $$L(x, f(g(\hat x))),$$
 где $\hat x$ — зашумленные данные.
 
-![работа denoising autoencoder](.pictures/denoising_autoencoder.png)
+![работа denoising autoencoder](https://raw.githubusercontent.com/natalymr/dl-notes/master/pictures/denoising_autoencoder.png)
 
-![данные зашумленные](./pictures/denoising_data.png)
+![данные зашумленные](https://raw.githubusercontent.com/natalymr/dl-notes/master/pictures/denoising_data.png)
 
 #### Скрытые переменные
 
@@ -54,7 +131,7 @@ $$L(x, f(g(\hat x))),$$
 
 Для того, чтобы лучше понять, что такое _manifold learning_, создадим простой двумерный датасет в виде кривой плюс шум и будем обучать на нем автоэнкодер.
 
-![данные-разнообразие](./pictures/manifold_learnong.png)
+![данные-разнообразие](https://raw.githubusercontent.com/natalymr/dl-notes/master/pictures/manifold_learnong.png)
 
 На картинке выше: 
 * синие точки — данные;
@@ -63,7 +140,7 @@ $$L(x, f(g(\hat x))),$$
 > ##### Линейный сжимающий автоенкодер
 > Самый простой автоэнкодер — это двухслойный сжимающий автоэнкодер с линейными функциями активации (больше слоев не имеет смысла при линейной активации).
 > Такой автоэнкодер ищет аффинное (линейное со сдвигом) подпространство в пространстве объектов, которое описывает наибольшую вариацию в объектах, тоже самое делает и _PCA_ (метод главных компонент) и оба они находят одно и тоже подпространство.
-> ![несколько алгоритмов](./pictures/manifold_learnong_lin.png)
+> ![несколько алгоритмов](https://github.com/natalymr/dl-notes/blob/master/pictures/manifold_learnong_lin.png?raw=true)
 >
 >
 >На картинке выше:
@@ -112,12 +189,12 @@ $$p(X,Z) = p(X|Z) p(Z)$$
 
 **Variational Autoencoders** — это автоэнкодеры, которые учатся отображать объекты в заданное скрытое пространство и, соответственно, сэмплить из него. Поэтому вариационные автоэнкодеры относят также к семейству генеративных моделей.
 
-![vae](./pictures/vae.png)
+![vae](https://github.com/natalymr/dl-notes/blob/master/pictures/vae.png?raw=true)
 
 Имея какое-то одно распределение $Z$, можно получить произвольное другое $X = g(Z)$.
 Например, пусть $Z$ — обычное нормальное распределение, $g(Z) = \frac{Z}{|Z|}+ \frac{Z}{10}$ — тоже случайное распределение, но выглядит совсем по-другому.
 
-![distributions](./pictures/distributions.png)
+![distributions](https://github.com/natalymr/dl-notes/blob/master/pictures/distributions.png?raw=true)
 
 Таким образом, если подобрать правильные функции, то можно отобразить пространства скрытых переменных обычных автоэнкодеров в какие-то хорошие пространства, например, такие, где распределение нормально. А потом обратно.
 
@@ -182,11 +259,11 @@ $$logP(X;\theta_2) - KL[Q(Z|X;\theta_1)||P(Z|X;\theta_2)] = \mathbb{E}_{Z \sim Q
 $$Q(Z|X;\theta_1) = N(\mu(X;\theta_1), \Sigma(X;\theta_1))$$
 То есть энкодер для каждого $X$ предсказывает 2 значения: среднее $\mu$ и вариацию $\Sigma$ нормального распределения, из которого уже сэмплируются значения. Работает это все примерно вот так:
 
-![vae_distr](./pictures/vae_distr.png)
+![vae_distr](https://github.com/natalymr/dl-notes/blob/master/pictures/vae_distr.png?raw=true)
 При том, что для каждой отдельной точки данных $X$ энкодер предсказывает некоторое нормальное распределение
 $$P(Z|X) = N(\mu(X), \Sigma(X))$$
 для маргинального распределения $X$: $P(Z) = N(0, I)$, что получается из формулы, и это потрясающе.
-![потрясающая_картинкa](./pictures/потрясающая_картинка.png)
+![потрясающая_картинкa](https://github.com/natalymr/dl-notes/blob/master/pictures/%D0%BF%D0%BE%D1%82%D1%80%D1%8F%D1%81%D0%B0%D1%8E%D1%89%D0%B0%D1%8F_%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B0.png?raw=true)
 При этом $KL[Q(Z|X;\theta_1)||N(0,I)]$ принимает вид:
 
 $$KL[Q(Z|X;\theta_1)||N(0,I)] = \frac{1}{2}\left(tr(\Sigma(X)) + \mu(X)^T\mu(X) - k - \log \det \Sigma(X) \right)$$
@@ -198,7 +275,7 @@ $$KL[Q(Z|X;\theta_1)||N(0,I)] = \frac{1}{2}\left(tr(\Sigma(X)) + \mu(X)^T\mu(X) 
 :exclamation:Ясно, что распространять ошибки через случайные значения напрямую нельзя, поэтому используется так называемый трюк с репараметризацией (**reparametrization trick**).
 
 Схема получается вот такая:
-![reparametrization_trick](./pictures/reparametrization_trick.png)
+![reparametrization_trick](https://github.com/natalymr/dl-notes/blob/master/pictures/reparametrization_trick.png?raw=true)
 
 Здесь на левой картинке схема без трюка, а на правой с трюком.
 Красным цветом показано семплирование, а синим вычисление ошибки.
@@ -207,9 +284,9 @@ $$KL[Q(Z|X;\theta_1)||N(0,I)] = \frac{1}{2}\left(tr(\Sigma(X)) + \mu(X)^T\mu(X) 
 
 После того как мы обучили такой вариационный автоэнкодер, декодер становится полноправной генеративной моделью. По сути и энкодер-то нужен в основном для того, чтобы обучить декодер отдельно быть генеративной моделью.
 
-![generate](./pictures/generate.png)
+![generate](https://github.com/natalymr/dl-notes/blob/master/pictures/generate.png?raw=true)
 
-![generate_from_N](./pictures/generate_from_N.png)
+![generate_from_N](https://github.com/natalymr/dl-notes/blob/master/pictures/generate_from_N.png?raw=true)
 
 
 

@@ -28,7 +28,7 @@ This repo contains my notes from my university Deep Learning course.
   - Deep Reinforcement Learning: Deep Q-Network, Deep Deterministic Policy Gradient.
 8. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/html/question_8.html)
   - Regularization: L2, Early Stopping, Dropout, Dropconnect, Batch Normalization.
-  - Adversarial attacks: White box, Black box, Targeted, Untargeted.
+  - [Adversarial attacks: White box, Black box, Targeted, Untargeted.](https://www.etsmtl.ca/Unites-de-recherche/LIVIA/Seminars/lgh_adversarial_examples.pdf)
 9. [Question](https://htmlpreview.github.io/?https://github.com/natalymr/dl-notes/blob/master/html/question_9.html)
   - Optimizers: Stochastic Gradient Descent, Momentum, Nesterov Momentum.
   - Object Detection. Faster R-CNN, Mask R-CNN.
